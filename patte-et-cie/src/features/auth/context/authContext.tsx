@@ -5,6 +5,7 @@ import loginResponse from "../../../../.mock/LoginResonse.json";
 
 type AuthContextType = {
   user: User | null;
+  isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
 };
@@ -13,30 +14,36 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fakePassword = "secret123";
-  const fakeUsername = "john";
+  const fakeEmail = "john@john";
 
-  const login = useCallback(async (username: string, password: string) => {
+  const login = useCallback(async (email: string, password: string) => {
+    setIsLoading(true);
     await new Promise((resolve) => setTimeout(resolve, 500));
 
-    if (username !== fakeUsername || password !== fakePassword) {
-      throw new Error("incorect credentials");
-    }
+    try {
+      if (email !== fakeEmail || password !== fakePassword) {
+        throw new Error("incorect credentials");
+      }
 
-    setUser({
-      id: loginResponse.id,
-      jwt: loginResponse.jwt,
-      role: loginResponse.role,
-      username: loginResponse.username,
-    });
+      setUser({
+        id: loginResponse.id,
+        jwt: loginResponse.jwt,
+        role: loginResponse.role,
+        username: loginResponse.username,
+      });
+    } finally {
+      setIsLoading(false);
+    }
   }, []);
 
   const logout = useCallback(() => {
     setUser(null);
   }, []);
 
-  return <AuthContext.Provider value={{ user, login, logout }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ user, isLoading, login, logout }}>{children}</AuthContext.Provider>;
 };
 
 export function useAuth() {

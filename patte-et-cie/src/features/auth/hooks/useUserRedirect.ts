@@ -13,7 +13,7 @@ export function useUserRedirect(user: User | null) {
       if (user) {
         router.push("/home");
       } else {
-        router.push("/auth");
+        router.push("/login");
       }
     }, 2000);
 

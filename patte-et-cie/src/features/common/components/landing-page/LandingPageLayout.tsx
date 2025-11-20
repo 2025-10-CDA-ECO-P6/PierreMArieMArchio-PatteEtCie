@@ -1,7 +1,7 @@
-import LoaderComponent from "../ui/loader/loader-component";
-import styles from "./landing-page-component.module.css";
+import Loader from "../../ui/loader/Loader";
+import styles from "./LandingPageLayout.module.css";
 
-export default function LandingPageComponent() {
+const LandingPageLayout = () => {
   return (
     <div className={styles.page}>
       <div className={styles.content}>
@@ -15,9 +15,11 @@ export default function LandingPageComponent() {
         </h2>
 
         <div className="mt-14">
-          <LoaderComponent />
+          <Loader />
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default LandingPageLayout;

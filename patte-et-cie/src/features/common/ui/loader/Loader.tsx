@@ -1,6 +1,6 @@
-import styles from "./loader-component.module.css";
+import styles from "./Loader.module.css";
 
-export default function LoaderComponent() {
+export default function Loader() {
   return (
     <div className={styles.loaderWrapper}>
       <div className={styles.loader}></div>
