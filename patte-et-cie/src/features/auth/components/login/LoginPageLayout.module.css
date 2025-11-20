@@ -14,11 +14,6 @@
   animation: fadeIn 1s ease;
 }
 
-.title {
-  position: relative;
-  top: -8rem;
-}
-
 @keyframes fadeIn {
   from {
     opacity: 0;
