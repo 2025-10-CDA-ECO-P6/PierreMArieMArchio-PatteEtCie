@@ -1,0 +1,16 @@
+{
+  "data": [
+    {
+      "Id": "animal-001",
+      "name": "Buddy",
+      "birth_date": "2020-01-15",
+      "identification": "ID-1001"
+    },
+    {
+      "Id": "animal-002",
+      "name": "Milo",
+      "birth_date": "2019-07-10",
+      "identification": "ID-1002"
+    }
+  ]
+}

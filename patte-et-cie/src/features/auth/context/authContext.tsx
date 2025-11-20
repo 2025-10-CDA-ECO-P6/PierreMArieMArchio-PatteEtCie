@@ -1,7 +1,7 @@
 "use client";
 import { createContext, ReactNode, useCallback, useContext, useState } from "react";
 import { User } from "../models/User";
-import loginResponse from "../../../../.mock/LoginResonse.json";
+import loginResponse from "../../../../.data/LoginResonse.json";
 
 type AuthContextType = {
   user: User | null;
