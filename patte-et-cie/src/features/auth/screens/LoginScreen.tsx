@@ -1,27 +1,15 @@
 "use client";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 import Loader from "@/src/features/common/ui/loader/Loader";
 import Logo from "@/src/features/common/components/header/logo/Logo";
 import LoginForm from "../components/login-form/LoginForm";
 import RegisterLink from "../components/register-link/RegisterLink";
-import { useAuth } from "../context/authContext";
+
+import { useLogin } from "../hooks/useLogin";
 
 const LoginScreen = () => {
-  const { login, isLoading, user } = useAuth();
-  const router = useRouter();
+  const { handleLogin, isLoading} = useLogin();
 
-  useEffect(() => {
-    console.log("user updated:", user);
-  }, [user]);
-
-  useEffect(() => {
-    if (user) {
-      router.push("/home");
-    }
-  }, [user, router]);
-
-  if (isLoading) {
+  if (isLoading ) {
     return (
       <div className="page">
         <div className="content">
@@ -40,7 +28,7 @@ const LoginScreen = () => {
           <span className="font-bold">Log in</span> or create an account
         </h2>
         <div className="mt-14">
-          <LoginForm login={login} />
+          <LoginForm login={handleLogin} />
           <RegisterLink />
         </div>
       </div>

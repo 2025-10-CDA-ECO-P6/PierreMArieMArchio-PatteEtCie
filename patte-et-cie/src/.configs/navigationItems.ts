@@ -1,14 +1,23 @@
 import { NavigationItem } from "../features/common/models";
 
-const NAVIGATION_ITEMS: NavigationItem[] = [
+export const NAVIGATION_ITEMS_CLIENT: NavigationItem[] = [
   {
     name: "home",
-    href: "/home",
+    href: "/client/home",
   },
   {
     name: "My animals",
-    href: "/animals",
+    href: "/client/animals",
   },
 ];
 
-export default NAVIGATION_ITEMS;
+export const NAVIGATION_ITEMS_PRO: NavigationItem[] = [
+  {
+    name: "home",
+    href: "/pro/home",
+  },
+  {
+    name: "My animals",
+    href: "/pro/animals",
+  },
+];
