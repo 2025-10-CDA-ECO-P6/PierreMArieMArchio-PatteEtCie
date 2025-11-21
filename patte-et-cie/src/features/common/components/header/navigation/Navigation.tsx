@@ -1,13 +1,13 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { NavigationItem } from "../../../models";
 import NAVIGATION_ITEMS from "../../../../../.configs/navigationItems";
 import Button from "../../../ui/button/Button";
 
 const Navigation = () => {
+  const router = useRouter();
   const pathname = usePathname();
-  console.log(NAVIGATION_ITEMS);
 
   return (
     <nav className="flex gap-4 h-full items-center">
@@ -17,7 +17,7 @@ const Navigation = () => {
           variant="ghost"
           isActive={pathname === item.href}
           onClick={() => {
-            if (item.href) window.location.href = item.href;
+            if (item.href) router.push(item.href);
           }}
         >
           {item.name}

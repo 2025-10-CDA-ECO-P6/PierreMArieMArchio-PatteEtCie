@@ -1,26 +1,18 @@
-import getAllVetResponse from "../../../../.data/getAllVet.json";
 import { Veterinarian } from "../models";
+import { HttpService } from "./HttpService";
 
 export const VeterinarianService = {
   getAll: async (): Promise<Veterinarian[]> => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(getAllVetResponse.data);
-      }, 500);
-    });
+    const res = await HttpService.get<{ data: Veterinarian[] }>("/data/getAllVetResponse.json");
+    return res.data;
   },
 
   getById: async (id: string): Promise<Veterinarian> => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        const vet = getAllVetResponse.data.find((v) => v.id === id);
-        if (!vet) {
-          reject(new Error("Veterinarian not found"));
-        } else {
-          resolve(vet);
-        }
-      }, 500);
-    });
+    const vets = await VeterinarianService.getAll();
+    const vet = vets.find((v) => v.id === id);
+    if (!vet) throw new Error("Veterinarian not found");
+    return vet;
   },
 };
+
 export default VeterinarianService;

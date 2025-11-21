@@ -1,0 +1,18 @@
+{
+  "data": [
+    {
+      "Id": "animal-001",
+      "name": "Petitounne",
+      "birth_date": "2020-01-15",
+      "identification": "ID-1001",
+      "img_url": "/petitounne.png"
+    },
+    {
+      "Id": "animal-002",
+      "name": "Good Boy",
+      "birth_date": "2019-07-10",
+      "identification": "ID-1002",
+      "img_url": "/goodboy.png"
+    }
+  ]
+}

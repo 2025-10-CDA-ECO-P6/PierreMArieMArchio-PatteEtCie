@@ -3,6 +3,8 @@ import { Geist, Geist_Mono, Manrope } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "../features/auth/context/authContext";
 import { VeterinarianProvider } from "../features/common/context/VeterinarianContext";
+import { OwnerProvider } from "../features/common/context/OwnerContext";
+import { AnimalProvider } from "../features/common/context/AnimalsContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,9 +35,13 @@ export default function RootLayout({
     <html lang="en">
       <AuthProvider>
         <VeterinarianProvider>
-          <body className={`${geistSans.variable} ${geistMono.variable} ${manrope.variable} antialiased`}>
-            {children}
-          </body>
+          <OwnerProvider>
+            <AnimalProvider>
+              <body className={`${geistSans.variable} ${geistMono.variable} ${manrope.variable} antialiased`}>
+                {children}
+              </body>
+            </AnimalProvider>
+          </OwnerProvider>
         </VeterinarianProvider>
       </AuthProvider>
     </html>

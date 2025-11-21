@@ -3,16 +3,18 @@ import { createContext, ReactNode, useCallback, useContext, useState } from "rea
 import { Veterinarian } from "../models";
 import VeterinarianService from "../services/VetenarianService";
 
-type VeterinarianContextType = {
+interface VeterinarianContextType {
+  currentVeterinarian: Veterinarian | null;
   veterinarians: Veterinarian[] | null;
   isLoading: boolean;
   getAllVeterinarians: () => Promise<void>;
-  getVeterinarianById: (id: string) => Promise<Veterinarian>;
-};
+  getVeterinarianById: (id: string) => Promise<void>;
+}
 
 const VeterinarianContext = createContext<VeterinarianContextType | undefined>(undefined);
 
 export const VeterinarianProvider = ({ children }: { children: ReactNode }) => {
+  const [currentVeterinarian, setCurrentVeterinarian] = useState<Veterinarian | null>(null);
   const [veterinarians, setVeterinarians] = useState<Veterinarian[] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -26,24 +28,20 @@ export const VeterinarianProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
-  const getVeterinarianById = useCallback(
-    async (id: string): Promise<Veterinarian> => {
-      if (!veterinarians || veterinarians.length === 0) {
-        return Promise.reject(new Error("No veterinarians available"));
-      }
-
-      const vet = veterinarians.find((v) => v.id === id);
-      if (!vet) {
-        return Promise.reject(new Error("Veterinarian not found"));
-      }
-
-      return Promise.resolve(vet);
-    },
-    [veterinarians]
-  );
+  const getVeterinarianById = useCallback(async (id: string) => {
+    setIsLoading(true);
+    try {
+      const vet = await VeterinarianService.getById(id);
+      setCurrentVeterinarian(vet);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
   return (
-    <VeterinarianContext.Provider value={{ veterinarians, isLoading, getAllVeterinarians, getVeterinarianById }}>
+    <VeterinarianContext.Provider
+      value={{ veterinarians, currentVeterinarian, isLoading, getAllVeterinarians, getVeterinarianById }}
+    >
       {children}
     </VeterinarianContext.Provider>
   );

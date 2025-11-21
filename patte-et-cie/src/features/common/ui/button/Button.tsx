@@ -2,7 +2,7 @@
 
 import { cx } from "../../utils";
 
-type ButtonVariant = "primary" | "secondary" | "outline" | "ghost" | "danger";
+type ButtonVariant = "primary" | "secondary" | "blue" | "outline" | "ghost" | "danger";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
@@ -12,6 +12,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 const variantClasses: Record<ButtonVariant, string> = {
   primary: "bg-white text-black hover:bg-gray-100",
   secondary: "bg-black text-white hover:bg-gray-800",
+  blue: "bg-[#9CA8FB] text-white border-[#F1E5E5]/25 hover:bg-[#818AF9]",
   outline: "border border-white text-white hover:bg-white hover:text-black",
   ghost: "bg-[#F6F6F6] text-black hover:bg-[#EDEDED]",
   danger: "bg-red-600 text-white hover:bg-red-700",
@@ -27,7 +28,7 @@ const getButtonClasses = (variant: ButtonVariant, isActive?: boolean) => {
 const Button = ({ variant = "primary", className, children, isActive, ...props }: ButtonProps) => (
   <button
     className={cx(
-      "px-5 py-2 h-full flex items-center rounded-lg font-medium transition cursor-pointer",
+      "px-5 py-2 h-full flex items-center justify-center rounded-lg font-medium transition cursor-pointer",
       getButtonClasses(variant, isActive),
       className
     )}

@@ -1,6 +1,6 @@
 {
-  "id": "u_42",
+  "id": "rel-003",
   "username": "john",
   "jwt": "eyFakeJwtToken0123456789",
-  "role": "admin"
+  "role": "client"
 }
