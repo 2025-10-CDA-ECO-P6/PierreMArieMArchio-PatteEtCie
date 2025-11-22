@@ -1,12 +1,10 @@
 "use client";
-import { useAuth } from "../features/auth/context/authContext";
-import { useUserRedirect } from "../features/auth/hooks/useUserRedirect";
+import { useAuthenticate } from "../features/auth/hooks/useAuthenticate";
 import Logo from "../features/common/components/header/logo/Logo";
 import Loader from "../features/common/ui/loader/Loader";
 
 export default function Home() {
-  const { user } = useAuth();
-  useUserRedirect(user);
+  useAuthenticate();
 
   return (
     <div className="page">

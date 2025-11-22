@@ -2,39 +2,38 @@
 
 import { useAuth } from "../context/authContext";
 import { useEffect } from "react";
-import { UserRole } from "../models/Role";
 import { useRouter } from "next/navigation";
+import { ROLE_REDIRECTION } from "@/src/.configs/roleRedirectConfig";
 
-export function useAuthenticate(requiredRole?: UserRole | UserRole[]) {
+export function useAuthenticate() {
   const { user, isLoading, authenticate } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
+    if (isLoading || user) return;
+
     const checkAuth = async () => {
       try {
         const authenticatedUser = await authenticate();
         if (!authenticatedUser) {
           router.replace("/login");
+          return;
         }
-      } catch (err) {
-        console.error("Authentication failed:", err);
+
+        const redirectTo = ROLE_REDIRECTION[authenticatedUser.role];
+        if (redirectTo) {
+          router.replace(redirectTo);
+          return;
+        }
+
+        router.replace("/login");
+      } catch {
         router.replace("/login");
       }
     };
 
-    if (!user && !isLoading) {
-      checkAuth();
-    }
+    checkAuth();
   }, [user, isLoading, authenticate, router]);
-
-  useEffect(() => {
-    if (!isLoading && user && requiredRole) {
-      const requiredRoles = Array.isArray(requiredRole) ? requiredRole : [requiredRole];
-      if (!requiredRoles.includes(user.role)) {
-        router.replace("/unauthorized");
-      }
-    }
-  }, [user, isLoading, requiredRole, router]);
 
   return { user, isLoading };
 }

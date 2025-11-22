@@ -1,8 +1,8 @@
-import { UserRole } from "./Role";
+import { Role } from "./Role";
 
 export interface User {
   id: string;
   username: string;
   jwt: string;
-  role: UserRole;
+  role: Role;
 }
