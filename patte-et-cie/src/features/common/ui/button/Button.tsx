@@ -25,17 +25,29 @@ const getButtonClasses = (variant: ButtonVariant, isActive?: boolean) => {
   return variantClasses[variant];
 };
 
-const Button = ({ variant = "primary", className, children, isActive, ...props }: ButtonProps) => (
-  <button
-    className={cx(
-      "px-5 py-2 h-full flex items-center justify-center rounded-lg font-medium transition cursor-pointer",
-      getButtonClasses(variant, isActive),
-      className
-    )}
-    {...props}
-  >
-    {children}
-  </button>
-);
+const Button = ({ variant = "primary", className, children, isActive, onClick, ...props }: ButtonProps) => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (isActive) {
+      e.preventDefault();
+      return;
+    }
+    onClick?.(e);
+  };
+
+  return (
+    <button
+      className={cx(
+
+        "px-2 py-1 sm:px-1 sm:py-3 h-auto flex items-center justify-center rounded-lg font-medium transition cursor-pointer",
+        getButtonClasses(variant, isActive),
+        className
+      )}
+      onClick={handleClick}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+};
 
 export default Button;

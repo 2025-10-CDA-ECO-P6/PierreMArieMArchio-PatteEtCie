@@ -16,7 +16,6 @@ export const AnimalService = {
 
   getByOwnerId: async (ownerId: string): Promise<Animal[]> => {
     const res = await HttpService.get<{ data: Animal[] }>("/data/getAllOwnerAnimalsResponse.json");
-    console.log("animals service", res.data);
     return res.data;
   },
 

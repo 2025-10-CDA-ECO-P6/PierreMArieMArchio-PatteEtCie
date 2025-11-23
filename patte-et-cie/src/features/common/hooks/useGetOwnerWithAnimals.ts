@@ -1,19 +1,29 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useAuth } from "../../auth/context/authContext";
 import { useOwners } from "../context/OwnerContext";
 
 export const useGetOwnerWithAnimals = () => {
   const { user } = useAuth();
   const { currentOwner, loadCurrentOwner, isLoading } = useOwners();
+  const hasLoadedRef = useRef(false);
 
   useEffect(() => {
-    if (!user) return;
-    if (currentOwner?.animals) return;
+    if (hasLoadedRef.current || !user) {
+      return;
+    }
 
+    if (currentOwner?.animals) {
+      hasLoadedRef.current = true;
+      return;
+    }
+
+    hasLoadedRef.current = true;
     loadCurrentOwner(user.id);
-  }, [user, currentOwner, loadCurrentOwner]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id]);
 
   return {
     owner: currentOwner,

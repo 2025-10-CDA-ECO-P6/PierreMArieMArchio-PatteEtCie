@@ -11,7 +11,6 @@ export const OwnerService = {
     const owners = await OwnerService.getAll();
     const owner = owners.find((o) => o.id === id);
     if (!owner) throw new Error("Owner not found");
-    console.log("owner service",owner);
     return owner;
   },
 

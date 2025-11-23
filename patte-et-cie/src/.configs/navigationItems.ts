@@ -7,7 +7,7 @@ export const NAVIGATION_ITEMS_CLIENT: NavigationItem[] = [
   },
   {
     name: "My animals",
-    href: "/client/animals",
+    href: "/client/animal",
   },
 ];
 
@@ -18,6 +18,6 @@ export const NAVIGATION_ITEMS_PRO: NavigationItem[] = [
   },
   {
     name: "My animals",
-    href: "/pro/animals",
+    href: "/pro/animal",
   },
 ];

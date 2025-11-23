@@ -5,16 +5,29 @@ import { useEffect } from "react";
 import { Role } from "../models/Role";
 import { useRouter } from "next/navigation";
 
-export function useAuthGuard(requiredRole?: Role | Role[]) {
-  const { user, isLoading } = useAuth();
+export const useAuthGuard = (requiredRole?: Role | Role[]) => {
+  const { user, isLoading, isHydrated } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (isLoading || !user || !requiredRole) return;
+    if (!isHydrated) return;
 
-    const roles = Array.isArray(requiredRole) ? requiredRole : [requiredRole];
-    if (!roles.includes(user.role)) router.replace("/unauthorized");
-  }, [user, isLoading, requiredRole, router]);
+    if (!user) {
+      router.replace("/unauthorized");
+      return;
+    }
 
-  return { user, isLoading };
-}
+    if (requiredRole) {
+      const roles = Array.isArray(requiredRole) ? requiredRole : [requiredRole];
+      if (!roles.includes(user.role)) {
+        router.replace("/unauthorized");
+        return;
+      }
+    }
+  }, [isHydrated, requiredRole, router, user]);
+
+  return {
+    user,
+    isLoading: isLoading || !isHydrated,
+  };
+};

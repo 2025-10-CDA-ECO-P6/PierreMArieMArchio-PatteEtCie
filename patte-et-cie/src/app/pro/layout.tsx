@@ -1,6 +1,6 @@
 "use client";
-import { NAVIGATION_ITEMS_PRO } from "@/src/.configs/navigationItems";
 
+import { NAVIGATION_ITEMS_PRO } from "@/src/.configs/navigationItems";
 import { useAuthGuard } from "@/src/features/auth/hooks/useAuthGuard";
 import Header from "@/src/features/common/components/header/Header";
 import Loader from "@/src/features/common/ui/loader/Loader";

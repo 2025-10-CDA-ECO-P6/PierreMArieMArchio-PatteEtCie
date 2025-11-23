@@ -30,11 +30,22 @@ export const OwnerProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
+  // Utiliser un callback sans dépendre de [owners]
+  // Passer la valeur en paramètre plutôt que de la fermer
   const getOwnerById = useCallback(
     async (id: string): Promise<Owner> => {
+      if (!id) {
+        throw new Error("L'ID du propriétaire est requis");
+      }
       setIsLoading(true);
       try {
-        const cachedOwner = owners?.find((o) => o.id === id);
+        // Chercher dans l'état actuel plutôt que dans la closure
+        let cachedOwner: Owner | undefined;
+        setOwners((prev) => {
+          cachedOwner = prev?.find((o) => o.id === id);
+          return prev;
+        });
+
         if (cachedOwner) {
           setCurrentOwner(cachedOwner);
           return cachedOwner;
@@ -42,39 +53,73 @@ export const OwnerProvider = ({ children }: { children: ReactNode }) => {
 
         const owner = await OwnerService.getById(id);
         setCurrentOwner(owner);
-
-        setOwners((prev) => (prev ? [...prev, owner] : [owner]));
-
+        setOwners((prev) => {
+          const exists = prev?.some((o) => o.id === id);
+          return exists ? prev : prev ? [...prev, owner] : [owner];
+        });
         return owner;
+      } catch (error) {
+        console.error(`Erreur lors du chargement du propriétaire ${id}:`, error);
+        throw error;
       } finally {
         setIsLoading(false);
       }
     },
-    [owners]
+    [] // ← Pas de dépendances
   );
 
   const loadCurrentOwner = useCallback(
     async (id: string) => {
+      if (!id) return;
       setIsLoading(true);
       try {
-        const owner = await getOwnerById(id);
+        let cachedOwner: Owner | undefined;
+        setOwners((prev) => {
+          cachedOwner = prev?.find((o) => o.id === id);
+          return prev;
+        });
+
+        if (cachedOwner?.animals) {
+          setCurrentOwner(cachedOwner);
+          return;
+        }
+
+        const owner = cachedOwner || (await OwnerService.getById(id));
         const animals = await AnimalService.getByOwnerId(owner.id);
         const updatedOwner = { ...owner, animals };
 
         setCurrentOwner(updatedOwner);
+        setOwners((prev) => {
+          const exists = prev?.some((o) => o.id === id);
+          return exists ? prev : prev ? [...prev, updatedOwner] : [updatedOwner];
+        });
+      } catch (error) {
+        console.error("Erreur lors du chargement du propriétaire:", error);
+        setCurrentOwner(null);
       } finally {
         setIsLoading(false);
       }
     },
-    [getOwnerById]
+    [] 
   );
 
   return (
-    <OwnerContext.Provider value={{ owners, currentOwner, isLoading, getAllOwners, getOwnerById, loadCurrentOwner }}>
+    <OwnerContext.Provider
+      value={{
+        owners,
+        currentOwner,
+        isLoading,
+        getAllOwners,
+        getOwnerById,
+        loadCurrentOwner,
+      }}
+    >
       {children}
     </OwnerContext.Provider>
   );
 };
+
+
 
 export function useOwners() {
   const ctx = useContext(OwnerContext);

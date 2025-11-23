@@ -19,7 +19,7 @@ const Navigation = ({ navigationItems }: NavigationProps) => {
         <Button
           key={item.name}
           variant="ghost"
-          isActive={pathname === item.href}
+          isActive={pathname.startsWith(item.href)}
           onClick={() => {
             if (item.href) router.push(item.href);
           }}
