@@ -7,7 +7,7 @@ export default function AnimalsLayout({ children }: { children: React.ReactNode 
   console.log("Layout Animals");
   const { currentOwner } = useOwners();
 
-  console.log("Layout Animals Owner populated");
+  console.log("Layout Animal: currentOwner", currentOwner);
 
   if (!currentOwner) return;
 

@@ -5,6 +5,7 @@ import { AuthProvider } from "../features/auth/context/authContext";
 import { VeterinarianProvider } from "../features/common/context/VeterinarianContext";
 import { OwnerProvider } from "../features/common/context/OwnerContext";
 import { AnimalProvider } from "../features/common/context/AnimalsContext";
+import { HealthRecordProvider } from "../features/health-record/contexts/HealthRecordContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,9 +38,11 @@ export default function RootLayout({
         <VeterinarianProvider>
           <OwnerProvider>
             <AnimalProvider>
-              <body className={`${geistSans.variable} ${geistMono.variable} ${manrope.variable} antialiased`}>
-                {children}
-              </body>
+              <HealthRecordProvider>
+                <body className={`${geistSans.variable} ${geistMono.variable} ${manrope.variable} antialiased`}>
+                  {children}
+                </body>
+              </HealthRecordProvider>
             </AnimalProvider>
           </OwnerProvider>
         </VeterinarianProvider>

@@ -1,7 +1,7 @@
 "use client";
 import { useAuthRedirection } from "../features/auth/hooks/useAuthRedirection";
 import Logo from "../features/common/components/header/logo/Logo";
-import Loader from "../features/common/ui/loader/Loader";
+import Loader from "../ui/loader/Loader";
 
 export default function Home() {
   useAuthRedirection();

@@ -30,8 +30,7 @@ export const OwnerProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
-  // Utiliser un callback sans dépendre de [owners]
-  // Passer la valeur en paramètre plutôt que de la fermer
+
   const getOwnerById = useCallback(
     async (id: string): Promise<Owner> => {
       if (!id) {
@@ -39,7 +38,7 @@ export const OwnerProvider = ({ children }: { children: ReactNode }) => {
       }
       setIsLoading(true);
       try {
-        // Chercher dans l'état actuel plutôt que dans la closure
+
         let cachedOwner: Owner | undefined;
         setOwners((prev) => {
           cachedOwner = prev?.find((o) => o.id === id);
@@ -65,7 +64,7 @@ export const OwnerProvider = ({ children }: { children: ReactNode }) => {
         setIsLoading(false);
       }
     },
-    [] // ← Pas de dépendances
+    []
   );
 
   const loadCurrentOwner = useCallback(
@@ -94,7 +93,7 @@ export const OwnerProvider = ({ children }: { children: ReactNode }) => {
           return exists ? prev : prev ? [...prev, updatedOwner] : [updatedOwner];
         });
       } catch (error) {
-        console.error("Erreur lors du chargement du propriétaire:", error);
+        console.error("Error :", error);
         setCurrentOwner(null);
       } finally {
         setIsLoading(false);

@@ -1,6 +1,6 @@
 "use client";
 
-import { cx } from "../../utils";
+import { cx } from "../utils";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;

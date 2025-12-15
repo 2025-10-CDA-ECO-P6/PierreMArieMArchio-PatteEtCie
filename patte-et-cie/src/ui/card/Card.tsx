@@ -1,6 +1,6 @@
 "use client";
 
-import { cx } from "../../utils";
+import { cx } from "../utils";
 
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   shadow?: boolean;

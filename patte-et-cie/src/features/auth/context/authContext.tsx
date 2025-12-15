@@ -70,7 +70,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       try {
         await authenticate();
       } catch {
-        console.error("Authentication error during hydration");
+        console.error("Authentication error");
       } finally {
         setIsHydrated(true);
       }

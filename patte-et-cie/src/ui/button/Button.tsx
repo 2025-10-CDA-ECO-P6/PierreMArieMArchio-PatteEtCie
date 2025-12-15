@@ -1,6 +1,6 @@
 "use client";
 
-import { cx } from "../../utils";
+import { cx } from "../utils";
 
 type ButtonVariant = "primary" | "secondary" | "blue" | "outline" | "ghost" | "danger";
 
@@ -37,7 +37,6 @@ const Button = ({ variant = "primary", className, children, isActive, onClick, .
   return (
     <button
       className={cx(
-
         "px-2 py-1 sm:px-1 sm:py-3 h-auto flex items-center justify-center rounded-lg font-medium transition cursor-pointer",
         getButtonClasses(variant, isActive),
         className

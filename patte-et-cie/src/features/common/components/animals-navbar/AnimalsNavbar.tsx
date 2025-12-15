@@ -2,9 +2,9 @@
 
 import { useBasePath } from "../../hooks/useBasePath";
 import { Animal } from "../../models/Animal";
-import Button from "../../ui/button/Button";
 import { usePathname, useRouter } from "next/navigation";
 import { buildAnimalPath } from "../../utils";
+import Button from "@/src/ui/button/Button";
 
 interface AnimalsNavbarProps {
   animals: Animal[] | undefined;
@@ -44,6 +44,5 @@ const AnimalsNavbar = ({ animals }: AnimalsNavbarProps) => {
     </div>
   );
 };
-
 
 export default AnimalsNavbar;

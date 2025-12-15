@@ -1,8 +1,8 @@
 "use client";
 
-import Card from "@/src/features/common/ui/card/Card";
-import Button from "../../../common/ui/button/Button";
-import Input from "../../../common/ui/input/Input";
+import Button from "@/src/ui/button/Button";
+import Card from "@/src/ui/card/Card";
+import Input from "@/src/ui/input/Input";
 import { useState } from "react";
 
 interface LoginFormProps {

@@ -1,7 +1,7 @@
 "use client";
 
 import Header from "@/src/features/common/components/header/Header";
-import Loader from "@/src/features/common/ui/loader/Loader";
+import Loader from "@/src/ui/loader/Loader";
 import { NAVIGATION_ITEMS_CLIENT } from "../../.configs/navigationItems";
 import { useAuthGuard } from "@/src/features/auth/hooks/useAuthGuard";
 import { Role } from "@/src/features/auth/models/Role";

@@ -3,7 +3,8 @@ import LoginForm from "@/src/features/auth/components/login-form/LoginForm";
 import RegisterLink from "@/src/features/auth/components/register-link/RegisterLink";
 import { useLogin } from "@/src/features/auth/hooks/useLogin";
 import Logo from "@/src/features/common/components/header/logo/Logo";
-import Loader from "@/src/features/common/ui/loader/Loader";
+import Loader from "@/src/ui/loader/Loader";
+
 
 export default function Login() {
   const { handleLogin, isLoading } = useLogin();

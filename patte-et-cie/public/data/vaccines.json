@@ -1,0 +1,18 @@
+{
+  "data": [
+    {
+      "id": "vax-001",
+      "administrationDate": "2023-05-12",
+      "expirationDate": "2024-05-12",
+      "vaccineType": "Rabies",
+      "medicalCareId": "mc-001"
+    },
+    {
+      "id": "vax-002",
+      "administrationDate": "2023-07-20",
+      "expirationDate": "2024-07-20",
+      "vaccineType": "Distemper",
+      "medicalCareId": "mc-002"
+    }
+  ]
+}

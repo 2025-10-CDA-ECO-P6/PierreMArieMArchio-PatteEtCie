@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { Animal } from "../../models/Animal";
-import Card from "../../ui/card/Card";
-import Button from "../../ui/button/Button";
 import Image from "next/image";
+import Button from "@/src/ui/button/Button";
+import Card from "@/src/ui/card/Card";
 
 interface AnimalsListProps {
   animals: Animal[] | undefined;

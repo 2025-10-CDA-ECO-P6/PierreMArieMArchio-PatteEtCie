@@ -2,8 +2,7 @@
 
 import { useRouter, usePathname } from "next/navigation";
 import { NavigationItem } from "../../../models";
-
-import Button from "../../../ui/button/Button";
+import Button from "@/src/ui/button/Button";
 
 interface NavigationProps {
   navigationItems: NavigationItem[];
