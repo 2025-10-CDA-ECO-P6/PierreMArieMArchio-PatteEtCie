@@ -1,0 +1,14 @@
+{
+  "data": [
+    {
+      "id": "hr-001",
+      "notes": "Animal healthy, routine checkup.",
+      "animalId": "animal-001"
+    },
+    {
+      "id": "hr-002",
+      "notes": "Minor allergy detected.",
+      "animalId": "animal-002"
+    }
+  ]
+}

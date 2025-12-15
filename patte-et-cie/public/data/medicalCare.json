@@ -1,0 +1,20 @@
+{
+  "data": [
+    {
+      "id": "mc-001",
+      "date": "2023-05-12",
+      "description": "Routine checkup",
+      "tag": "checkup",
+      "healthRecordId": "hr-001",
+      "veterinarianId": "vet-001"
+    },
+    {
+      "id": "mc-002",
+      "date": "2023-07-20",
+      "description": "Vaccination booster",
+      "tag": "vaccination",
+      "healthRecordId": "hr-002",
+      "veterinarianId": "vet-002"
+    }
+  ]
+}

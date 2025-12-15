@@ -1,13 +1,16 @@
 "use client";
-import { createContext, ReactNode, useCallback, useContext, useState } from "react";
+import { createContext, ReactNode, useCallback, useContext, useEffect, useRef, useState } from "react";
 import { User } from "../models/User";
-import loginResponse from "../../../../.mock/LoginResonse.json";
+import { AuthService } from "../services/AuthService";
+import { JWTService } from "../services/JWTService";
 
 type AuthContextType = {
   user: User | null;
   isLoading: boolean;
-  login: (email: string, password: string) => Promise<void>;
+  isHydrated: boolean;
+  login: (email: string, password: string) => Promise<User>;
   logout: () => void;
+  authenticate: () => Promise<User>;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -15,35 +18,74 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isHydrated, setIsHydrated] = useState(false);
+  const hydrationAttemptedRef = useRef(false);
 
-  const fakePassword = "secret123";
-  const fakeEmail = "john@john";
-
-  const login = useCallback(async (email: string, password: string) => {
+  const login = async (email: string, password: string): Promise<User> => {
     setIsLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 500));
-
     try {
-      if (email !== fakeEmail || password !== fakePassword) {
-        throw new Error("incorect credentials");
-      }
+      const userData = await AuthService.login({ email, password });
 
-      setUser({
-        id: loginResponse.id,
-        jwt: loginResponse.jwt,
-        role: loginResponse.role,
-        username: loginResponse.username,
-      });
+      JWTService.setToken(userData.jwt);
+
+      setUser(userData);
+      return userData;
+    } catch (err) {
+      throw err;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const logout = useCallback(() => {
+    setUser(null);
+    JWTService.removeToken();
+  }, []);
+
+  const authenticate = useCallback(async (): Promise<User> => {
+    setIsLoading(true);
+    try {
+      const token = JWTService.getToken();
+      if (!token) throw new Error("No token found");
+
+      const refreshedUser = await AuthService.authenticate(token);
+      if (refreshedUser.jwt) JWTService.setToken(refreshedUser.jwt);
+
+      setUser(refreshedUser);
+      return refreshedUser;
+    } catch (err) {
+      setUser(null);
+      JWTService.removeToken();
+      throw err;
     } finally {
       setIsLoading(false);
     }
   }, []);
 
-  const logout = useCallback(() => {
-    setUser(null);
+  useEffect(() => {
+    if (hydrationAttemptedRef.current) return;
+    hydrationAttemptedRef.current = true;
+
+    const hydrate = async () => {
+      try {
+        await authenticate();
+      } catch {
+        console.error("Authentication error");
+      } finally {
+        setIsHydrated(true);
+      }
+    };
+
+    hydrate();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return <AuthContext.Provider value={{ user, isLoading, login, logout }}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ user, isLoading, isHydrated, login, logout, authenticate }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export function useAuth() {

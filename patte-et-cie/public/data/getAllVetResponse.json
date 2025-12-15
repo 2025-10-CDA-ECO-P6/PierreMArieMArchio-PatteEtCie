@@ -1,0 +1,18 @@
+{
+  "data": [
+    {
+      "id": "rel-001",
+      "first_name": "Alice",
+      "last_name": "Dupont",
+      "email": "alice.dupont@example.com",
+      "tel": 33601020304
+    },
+    {
+      "id": "rel-002",
+      "first_name": "Marc",
+      "last_name": "Bernard",
+      "email": "marc.bernard@example.com",
+      "tel": 33605060708
+    }
+  ]
+}

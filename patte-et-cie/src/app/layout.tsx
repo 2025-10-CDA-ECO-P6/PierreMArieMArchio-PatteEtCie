@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Manrope } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "../features/auth/context/authContext";
+import { VeterinarianProvider } from "../features/common/context/VeterinarianContext";
+import { OwnerProvider } from "../features/common/context/OwnerContext";
+import { AnimalProvider } from "../features/common/context/AnimalsContext";
+import { HealthRecordProvider } from "../features/health-record/contexts/HealthRecordContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,9 +35,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <AuthProvider>
-        <body className={`${geistSans.variable} ${geistMono.variable} ${manrope.variable} antialiased`}>
-          {children}
-        </body>
+        <VeterinarianProvider>
+          <OwnerProvider>
+            <AnimalProvider>
+              <HealthRecordProvider>
+                <body className={`${geistSans.variable} ${geistMono.variable} ${manrope.variable} antialiased`}>
+                  {children}
+                </body>
+              </HealthRecordProvider>
+            </AnimalProvider>
+          </OwnerProvider>
+        </VeterinarianProvider>
       </AuthProvider>
     </html>
   );
